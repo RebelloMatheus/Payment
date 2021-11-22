@@ -1,110 +1,116 @@
-# Payment
+## IntroduÃ§Ã£o
+
+Este projeto reflete um dos desafios realizados como parte de um processo seletivo para uma empresa na cidade de Aracaju-SE.
+
+## Desafio: TransaÃ§Ã£o com cartÃ£o e antecipaÃ§Ã£o de recebÃ­veis
+
+[![GitHub issues][ImagemProblema]][Problemas] [![GitHub license][ImagemLicenca]][Licenca]
 
 
-# Transação com cartão e antecipação de recebíveis
+# TransaÃ§Ã£o com cartÃ£o e antecipaÃ§Ã£o de recebÃ­veis
 
-A Pagcerto pretende lançar no mercado o serviço de antecipação de recebíveis, e para isso precisamos da sua ajuda. Aos lojistas/vendedores serão permitidos solicitar antecipação de recebíveis das transações aprovadas pela Pagcerto. Seu desafio é desenvolver um projeto que represente esse produto, sendo a implementação discorrida em três etapas. A primeira etapa destina-se a transação com cartão, a segunda tem foco no gerenciamento de antecipação e a terceira trata sobre os testes funcionais.
+A Pagcerto pretende lanÃ§ar no mercado o serviÃ§o de antecipaÃ§Ã£o de recebÃ­veis, e para isso precisamos da sua ajuda. Aos lojistas/vendedores serÃ£o permitidos solicitar antecipaÃ§Ã£o de recebÃ­veis das transaÃ§Ãµes aprovadas pela Pagcerto. Seu desafio Ã© desenvolver um projeto que represente esse produto, sendo a implementaÃ§Ã£o discorrida em trÃªs etapas. A primeira etapa destina-se a transaÃ§Ã£o com cartÃ£o, a segunda tem foco no gerenciamento de antecipaÃ§Ã£o e a terceira trata sobre os testes funcionais.
 
-# Etapa 1: Transação
+# Etapa 1: TransaÃ§Ã£o
 
-Transações são operações financeiras originadas de vendas com cartão de crédito. Para cada transação, devem ser mantidas as seguintes informações:
+TransaÃ§Ãµes sÃ£o operaÃ§Ãµes financeiras originadas de vendas com cartÃ£o de crÃ©dito. Para cada transaÃ§Ã£o, devem ser mantidas as seguintes informaÃ§Ãµes:
 
-- Identificador único numérico da transação (NSU);
-- Data em que a transação foi efetuada;
-- Data de aprovação (caso aprovada);
-- Data de reprovação (caso reprovada);
-- Antecipado (flag que marca uma transação como aprovada na solicitação de antecipação);
-- Confirmação da adquirente (aprovada ou recusada);
-- Valor bruto da transação;
-- Valor líquido da transação (valor da transação subtraído a taxa fixa);
+- Identificador Ãºnico numÃ©rico da transaÃ§Ã£o (NSU);
+- Data em que a transaÃ§Ã£o foi efetuada;
+- Data de aprovaÃ§Ã£o (caso aprovada);
+- Data de reprovaÃ§Ã£o (caso reprovada);
+- Antecipado (flag que marca uma transaÃ§Ã£o como aprovada na solicitaÃ§Ã£o de antecipaÃ§Ã£o);
+- ConfirmaÃ§Ã£o da adquirente (aprovada ou recusada);
+- Valor bruto da transaÃ§Ã£o;
+- Valor lÃ­quido da transaÃ§Ã£o (valor da transaÃ§Ã£o subtraÃ­do a taxa fixa);
 - Taxa fixa cobrada;
-- Número de parcelas da transação;
-- Quatro últimos dígitos do cartão.
+- NÃºmero de parcelas da transaÃ§Ã£o;
+- Quatro Ãºltimos dÃ­gitos do cartÃ£o.
 
-Para cada parcela de transação, devem ser mantidas as seguintes informações:
+Para cada parcela de transaÃ§Ã£o, devem ser mantidas as seguintes informaÃ§Ãµes:
 
-- Identificador único numérico da parcela;
-- Chave estrangeira da transação;
+- Identificador Ãºnico numÃ©rico da parcela;
+- Chave estrangeira da transaÃ§Ã£o;
 - Valor bruto da parcela;
-- Valor líquido da parcela;
+- Valor lÃ­quido da parcela;
 - Numero da parcela;
-- Valor antecipado (Esse campo só deve ser preenchido se a transação for aprovada pela análise do financeiro, na solicitação de antecipação);
+- Valor antecipado (Esse campo sÃ³ deve ser preenchido se a transaÃ§Ã£o for aprovada pela anÃ¡lise do financeiro, na solicitaÃ§Ã£o de antecipaÃ§Ã£o);
 - Data prevista de recebimento da parcela;
-- Data em que a parcela foi repassada (Esse campo só deve ser preenchido se a transação for aprovada pela análise do financeiro, na solicitação de antecipação).
+- Data em que a parcela foi repassada (Esse campo sÃ³ deve ser preenchido se a transaÃ§Ã£o for aprovada pela anÃ¡lise do financeiro, na solicitaÃ§Ã£o de antecipaÃ§Ã£o).
 
-Toda transação aprovada deve gerar parcelas com vencimento a cada 30 dias, exemplo: Se a transação for de R$100,00 em 2x (duas parcelas), deve ser criado o registro de transação (entidade forte), conforme os critérios acima, e uma lista de parcelas associadas a essa transação (entidade fraca). Nesse exemplo, seriam geradas duas parcelas de R$49,55 cada, sendo esse valor obtido a partir do valor da transação, nesse caso 100 reais, subtraido a taxa fixa, 0,90, e dividido pelo número de parcelas, no exemplo 2x. Sobre a data de recebimento das parcelas, ainda nesse exemplo, a primeira teria seu repasse realizado com 30 dias após a data de realização da venda e a segunda parcela com 60 dias a partir da mesma data de referência.
+Toda transaÃ§Ã£o aprovada deve gerar parcelas com vencimento a cada 30 dias, exemplo: Se a transaÃ§Ã£o for de R$100,00 em 2x (duas parcelas), deve ser criado o registro de transaÃ§Ã£o (entidade forte), conforme os critÃ©rios acima, e uma lista de parcelas associadas a essa transaÃ§Ã£o (entidade fraca). Nesse exemplo, seriam geradas duas parcelas de R$49,55 cada, sendo esse valor obtido a partir do valor da transaÃ§Ã£o, nesse caso 100 reais, subtraido a taxa fixa, 0,90, e dividido pelo nÃºmero de parcelas, no exemplo 2x. Sobre a data de recebimento das parcelas, ainda nesse exemplo, a primeira teria seu repasse realizado com 30 dias apÃ³s a data de realizaÃ§Ã£o da venda e a segunda parcela com 60 dias a partir da mesma data de referÃªncia.
 
-## Critérios de aceitação
+## CritÃ©rios de aceitaÃ§Ã£o
 
-- Cobrar taxa fixa de 0,90 nas transações aprovadas;
-- Na requisição de transação (efetuar pagamento), o número do cartão deve conter 16 caracteres numéricos, sem espaços;
-- Caso o número do cartão inicie com "5999", deve ter a transação reprovada ao efetuar pagamento, nos demais casos válidos a transação deverá ser aprovada;
-- Gerar parcelas apenas em transações aprovadas;
-- O vencimento de cada parcela deverá ser obtido através da multiplicação do número da parcela por 30, conforme exemplificado acima;
-- O valor líquido da parcela deverá ser obtido a partir do valor bruto da transação subtraído a taxa fixa, dividido pelo número de parcelas (já citado em exemplo).
+- Cobrar taxa fixa de 0,90 nas transaÃ§Ãµes aprovadas;
+- Na requisiÃ§Ã£o de transaÃ§Ã£o (efetuar pagamento), o nÃºmero do cartÃ£o deve conter 16 caracteres numÃ©ricos, sem espaÃ§os;
+- Caso o nÃºmero do cartÃ£o inicie com "5999", deve ter a transaÃ§Ã£o reprovada ao efetuar pagamento, nos demais casos vÃ¡lidos a transaÃ§Ã£o deverÃ¡ ser aprovada;
+- Gerar parcelas apenas em transaÃ§Ãµes aprovadas;
+- O vencimento de cada parcela deverÃ¡ ser obtido atravÃ©s da multiplicaÃ§Ã£o do nÃºmero da parcela por 30, conforme exemplificado acima;
+- O valor lÃ­quido da parcela deverÃ¡ ser obtido a partir do valor bruto da transaÃ§Ã£o subtraÃ­do a taxa fixa, dividido pelo nÃºmero de parcelas (jÃ¡ citado em exemplo).
 
-## Sobre o serviço
+## Sobre o serviÃ§o
 
 Construa uma API RESTful para que nossos clientes integrem seus sistemas financeiros com a sua conta da Pagcerto, oferecendo os seguintes endpoints:
 
-- Efetuar pagamento com cartão de crédito;
-- Consultar uma transação e suas parcelas a partir do identificador da transação.
+- Efetuar pagamento com cartÃ£o de crÃ©dito;
+- Consultar uma transaÃ§Ã£o e suas parcelas a partir do identificador da transaÃ§Ã£o.
 
-# Etapa 2: Antecipação
+# Etapa 2: AntecipaÃ§Ã£o
 
-Solicitações de antecipação são documentos emitidos pelo lojista/vendedor através do nosso serviço de repasse antecipado de valores. A antecipação de uma transação tem um custo de 3.8% aplicado em cada parcela da transação, se aprovada pela análise do financeiro, sendo automaticamente debitado no seu repasse. Considerando o exemplo da transação citado na fase 1, se cada parcela da transação tem valor líquido de 49,55, o valor antecipado da parcela seria obtido a partir desse valor líquido, debitado a taxa de 3.8%.
+SolicitaÃ§Ãµes de antecipaÃ§Ã£o sÃ£o documentos emitidos pelo lojista/vendedor atravÃ©s do nosso serviÃ§o de repasse antecipado de valores. A antecipaÃ§Ã£o de uma transaÃ§Ã£o tem um custo de 3.8% aplicado em cada parcela da transaÃ§Ã£o, se aprovada pela anÃ¡lise do financeiro, sendo automaticamente debitado no seu repasse. Considerando o exemplo da transaÃ§Ã£o citado na fase 1, se cada parcela da transaÃ§Ã£o tem valor lÃ­quido de 49,55, o valor antecipado da parcela seria obtido a partir desse valor lÃ­quido, debitado a taxa de 3.8%.
 
-Para cada solicitação de antecipação, devem ser mantidas as seguintes informações:
+Para cada solicitaÃ§Ã£o de antecipaÃ§Ã£o, devem ser mantidas as seguintes informaÃ§Ãµes:
 
-- Identificador único da solicitação;
-- Data da solicitação;
-- Data de início da análise;
-- Data de finalização da análise;
-- Resultado da análise (aprovado, aprovado parcialmente ou reprovado);
-- Valor solicitado na antecipação (soma do valor líquido das transações solicitadas na antecipação);
-- Valor antecipado (soma do valor antecipado de todas as parcelas de transações aprovadas na antecipação);
-- Lista de transações solicitadas na antecipação.
+- Identificador Ãºnico da solicitaÃ§Ã£o;
+- Data da solicitaÃ§Ã£o;
+- Data de inÃ­cio da anÃ¡lise;
+- Data de finalizaÃ§Ã£o da anÃ¡lise;
+- Resultado da anÃ¡lise (aprovado, aprovado parcialmente ou reprovado);
+- Valor solicitado na antecipaÃ§Ã£o (soma do valor lÃ­quido das transaÃ§Ãµes solicitadas na antecipaÃ§Ã£o);
+- Valor antecipado (soma do valor antecipado de todas as parcelas de transaÃ§Ãµes aprovadas na antecipaÃ§Ã£o);
+- Lista de transaÃ§Ãµes solicitadas na antecipaÃ§Ã£o.
 
-## Critérios de aceitação
+## CritÃ©rios de aceitaÃ§Ã£o
 
-- Não é permitido incluir em uma nova solicitação de antecipação transações solicitadas anteriormente;
-- Para realização de uma nova solicitação de antecipação, é necessário que a solicitação atual já tenha sido finalizada;
-- Uma transação com análise aprovada ou reprovada não pode ser modificada, ou seja, não deve permitir alteração no status (aprovada/reprovada);
-- A data de finalização da análise deve ser preenchida quando todas as transações da antecipação forem resolvidas como aprovadas ou reprovadas;
-- Aplicar taxa de 3.8% em cada parcela de transação antecipada, considerando o valor líquido da parcela. Esse valor deve ser armazenado no campo "Valor antecipado" da parcela da transação em questão;
-- Caso a transação seja aprovada na antecipação, ao finalizar a solicitação, deve ter o campo "Data em que a parcela foi repassada", da entidade "Parcela", preenchida com a data atual.
+- NÃ£o Ã© permitido incluir em uma nova solicitaÃ§Ã£o de antecipaÃ§Ã£o transaÃ§Ãµes solicitadas anteriormente;
+- Para realizaÃ§Ã£o de uma nova solicitaÃ§Ã£o de antecipaÃ§Ã£o, Ã© necessÃ¡rio que a solicitaÃ§Ã£o atual jÃ¡ tenha sido finalizada;
+- Uma transaÃ§Ã£o com anÃ¡lise aprovada ou reprovada nÃ£o pode ser modificada, ou seja, nÃ£o deve permitir alteraÃ§Ã£o no status (aprovada/reprovada);
+- A data de finalizaÃ§Ã£o da anÃ¡lise deve ser preenchida quando todas as transaÃ§Ãµes da antecipaÃ§Ã£o forem resolvidas como aprovadas ou reprovadas;
+- Aplicar taxa de 3.8% em cada parcela de transaÃ§Ã£o antecipada, considerando o valor lÃ­quido da parcela. Esse valor deve ser armazenado no campo "Valor antecipado" da parcela da transaÃ§Ã£o em questÃ£o;
+- Caso a transaÃ§Ã£o seja aprovada na antecipaÃ§Ã£o, ao finalizar a solicitaÃ§Ã£o, deve ter o campo "Data em que a parcela foi repassada", da entidade "Parcela", preenchida com a data atual.
 
-O trâmite de uma solicitação de antecipação progride através das seguintes etapas:
+O trÃ¢mite de uma solicitaÃ§Ã£o de antecipaÃ§Ã£o progride atravÃ©s das seguintes etapas:
 
-1. Aguardando análise (pendente): O lojista solicitou antecipação, mas ainda não foi iniciado a análise pela equipe financeira da Pagcerto;
-2. Em análise: A equipe financeira iniciou a análise da antecipação, podendo aprovar ou reprovar uma ou mais transações contidas na solicitação;
-3. Finalizada: Quando a análise da solicitação é encerrada, a antecipação pode assumir um dos seguintes resultados: aprovada (todas as transações aprovadas), aprovada parcialmente (quando existe ao menos uma transação aprovada e uma transação reprovada na análise) ou reprovada (todas as transações reprovadas).
+1. Aguardando anÃ¡lise (pendente): O lojista solicitou antecipaÃ§Ã£o, mas ainda nÃ£o foi iniciado a anÃ¡lise pela equipe financeira da Pagcerto;
+2. Em anÃ¡lise: A equipe financeira iniciou a anÃ¡lise da antecipaÃ§Ã£o, podendo aprovar ou reprovar uma ou mais transaÃ§Ãµes contidas na solicitaÃ§Ã£o;
+3. Finalizada: Quando a anÃ¡lise da solicitaÃ§Ã£o Ã© encerrada, a antecipaÃ§Ã£o pode assumir um dos seguintes resultados: aprovada (todas as transaÃ§Ãµes aprovadas), aprovada parcialmente (quando existe ao menos uma transaÃ§Ã£o aprovada e uma transaÃ§Ã£o reprovada na anÃ¡lise) ou reprovada (todas as transaÃ§Ãµes reprovadas).
 
-## Sobre o serviço
+## Sobre o serviÃ§o
 
 Implemente os seguintes endpoints na API:
 
-- Consultar transações disponíveis para solicitar antecipação (não é necessário filtros);
-- Solicitar antecipação a partir de uma lista de transações;
-- Iniciar o atendimento da antecipação;
-- Aprovar ou reprovar uma ou mais transações da antecipação (quando todas as transações forem finalizadas, a antecipação será finalizada);
-- Consultar histórico de antecipações com filtro por status (pendente, em análise, finalizada).
+- Consultar transaÃ§Ãµes disponÃ­veis para solicitar antecipaÃ§Ã£o (nÃ£o Ã© necessÃ¡rio filtros);
+- Solicitar antecipaÃ§Ã£o a partir de uma lista de transaÃ§Ãµes;
+- Iniciar o atendimento da antecipaÃ§Ã£o;
+- Aprovar ou reprovar uma ou mais transaÃ§Ãµes da antecipaÃ§Ã£o (quando todas as transaÃ§Ãµes forem finalizadas, a antecipaÃ§Ã£o serÃ¡ finalizada);
+- Consultar histÃ³rico de antecipaÃ§Ãµes com filtro por status (pendente, em anÃ¡lise, finalizada).
 
 # Etapa 3: Testes
 
-Faça a implementação dos testes necessários a fim de garantir o cumprimento das regras de negócio descritas no desafio.
+FaÃ§a a implementaÃ§Ã£o dos testes necessÃ¡rios a fim de garantir o cumprimento das regras de negÃ³cio descritas no desafio.
 
-# Sobre o desenvolvimento da solução
+# Sobre o desenvolvimento da soluÃ§Ã£o
 
-Para o desenvolvimento do nosso serviço, atente-se para algumas considerações importantes:
+Para o desenvolvimento do nosso serviÃ§o, atente-se para algumas consideraÃ§Ãµes importantes:
 
-1. Nossa API RESTful deverá ser desenvolvida utilizando ASP.NET Core, Entity Framework Core e SQL Server;
-2. Todo o código do projeto deve ser escrito em inglês;
-3. Deverá ser utilizado o Git do próprio desenvolvedor para versionamento do código e o repositório deverá ser mantido no GitHub.
+1. Nossa API RESTful deverÃ¡ ser desenvolvida utilizando ASP.NET Core, Entity Framework Core e SQL Server;
+2. Todo o cÃ³digo do projeto deve ser escrito em inglÃªs;
+3. DeverÃ¡ ser utilizado o Git do prÃ³prio desenvolvedor para versionamento do cÃ³digo e o repositÃ³rio deverÃ¡ ser mantido no GitHub.
 
 ## Como testar?
 
-1. Fazer um clone deste repositório em algum lugar de sua preferência:
+1. Fazer um clone deste repositÃ³rio em algum lugar de sua preferÃªncia:
 
 ```
 git clone https://github.com/RebelloMatheus/Payment.git
@@ -121,9 +127,10 @@ dotnet run --project .\src\Payment.Application.WebApi\Payment.Application.WebApi
 
 ```
 
-## Documentação dos Endpoint
+## DocumentaÃ§Ã£o dos Endpoint
+![image](https://user-images.githubusercontent.com/28796027/142798763-30192c8e-ad70-46b4-8fb9-919b1675496d.png)
 
 
-## Ainda tem perguntas ou sugestão de melhoria?
+## Ainda tem perguntas ou sugestÃ£o de melhoria?
 
-Sinta-se à vontade em abrir um [issue][DefeitoInnovt] ou [Pull Request][PullRequest].
+Sinta-se Ã  vontade em abrir um [issue][DefeitoInnovt] ou [Pull Request][PullRequest].
