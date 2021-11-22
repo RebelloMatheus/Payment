@@ -4,9 +4,6 @@ Este projeto reflete um dos desafios realizados como parte de um processo seleti
 
 ## Desafio: Transação com cartão e antecipação de recebíveis
 
-[![GitHub issues][ImagemProblema]][Problemas] [![GitHub license][ImagemLicenca]][Licenca]
-
-
 # Transação com cartão e antecipação de recebíveis
 
 A Pagcerto pretende lançar no mercado o serviço de antecipação de recebíveis, e para isso precisamos da sua ajuda. Aos lojistas/vendedores serão permitidos solicitar antecipação de recebíveis das transações aprovadas pela Pagcerto. Seu desafio é desenvolver um projeto que represente esse produto, sendo a implementação discorrida em três etapas. A primeira etapa destina-se a transação com cartão, a segunda tem foco no gerenciamento de antecipação e a terceira trata sobre os testes funcionais.
@@ -133,4 +130,4 @@ dotnet run --project .\src\Payment.Application.WebApi\Payment.Application.WebApi
 
 ## Ainda tem perguntas ou sugestão de melhoria?
 
-Sinta-se à vontade em abrir um [issue][DefeitoInnovt] ou [Pull Request][PullRequest].
+Sinta-se à vontade em abrir um [issue](https://github.com/RebelloMatheus/Payment/issues) ou [Pull Request](https://github.com/RebelloMatheus/Payment/pulls).
