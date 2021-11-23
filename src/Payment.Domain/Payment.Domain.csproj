@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+      <Description>Este é um teste aplicado para uma vaga de desenvolvedor</Description>
+      <Authors>Matheus Rebello</Authors>
+      <Copyright>Matheus Rebello</Copyright>
+  </PropertyGroup>
+
+</Project>

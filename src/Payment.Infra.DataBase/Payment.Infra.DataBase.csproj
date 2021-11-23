@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+      <Description>Este é um teste aplicado para uma vaga de desenvolvedor</Description>
+      <Authors>Matheus Rebello</Authors>
+      <Copyright>Matheus Rebello</Copyright>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Payment.Domain\Payment.Domain.csproj" />
+    </ItemGroup>
+</Project>
