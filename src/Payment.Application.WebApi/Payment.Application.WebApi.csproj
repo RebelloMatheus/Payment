@@ -3,11 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Payment.Domain.Mediator\Payment.Domain.Mediator.csproj" />
     <ProjectReference Include="..\Payment.Domain.Service\Payment.Domain.Service.csproj" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />

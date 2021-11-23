@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  payment.application.webapi:
+    image: ${DOCKER_REGISTRY-}paymentapplicationwebapi
+    build:
+      context: .
+      dockerfile: Payment.Application.WebApi/Dockerfile
