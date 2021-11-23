@@ -126,7 +126,7 @@ dotnet run --project .\src\Payment.Application.WebApi\Payment.Application.WebApi
 
 ## Não tem SQL Server instalado?
 
-# Sugestão, cria no docker
+# Sugestão, criar no docker
 
 1. Crie um arquivo docker-compose.yml e cole o código a baixo:
 
