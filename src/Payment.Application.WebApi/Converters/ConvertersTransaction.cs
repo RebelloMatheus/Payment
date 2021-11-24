@@ -19,6 +19,8 @@ namespace Payment.Application.WebApi.Converters
 
         public TransactionListJson ConvertContractToJson(IEnumerable<TransactionContract> contracts)
         {
+            if (!contracts.Any())
+                return null;
             var transactionListJson = new TransactionListJson
             {
                 Transactions = contracts.Select(ConvertContractToJson).ToList(),

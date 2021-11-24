@@ -95,7 +95,7 @@ namespace Payment.Test.Tests.Unit.Services
 
             Func<Task> ret = async () => await _service.ProcessAsync(cardPayment);
 
-            ret.Should().Throw<PaymentException>();
+            ret.Should().Throw<PaymentException>().WithMessage(SR.TRANSACTION_RECUSED_INVALID_CARD);
             var transactions = await _repositoryBase.GetAllAsync<Transactions>();
             var transaction = transactions.First();
             transaction.Installments.Should().BeNull();

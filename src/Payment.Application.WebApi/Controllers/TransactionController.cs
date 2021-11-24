@@ -48,7 +48,13 @@ namespace Payment.Application.WebApi.Controllers
             }
             catch (PaymentException ex)
             {
-                return new ErrorJson(new Error { Message = ex.Message, StatusCode = ex.StatusCodigo, Uri = ex.Uri });
+                return new ErrorJson(
+                    new Error
+                    {
+                        Message = ex.Message,
+                        StatusCode = ex.StatusCodigo,
+                        Uri = "api/v2/transaction/process"
+                    });
             }
         }
 
@@ -58,17 +64,10 @@ namespace Payment.Application.WebApi.Controllers
         [HttpGet, Route("get")]
         public async Task<IActionResult> Get()
         {
-            try
-            {
-                var request = new TransactionGetIdRequest(null);
-                var response = await _mediator.Send(request);
+            var request = new TransactionGetIdRequest(null);
+            var response = await _mediator.Send(request);
 
-                return _convertersTransaction.ConvertContractToJson(response);
-            }
-            catch (PaymentException ex)
-            {
-                return new ErrorJson(new Error { Message = ex.Message, StatusCode = ex.StatusCodigo, Uri = ex.Uri });
-            }
+            return _convertersTransaction.ConvertContractToJson(response);
         }
 
         /// <summary>
@@ -77,17 +76,10 @@ namespace Payment.Application.WebApi.Controllers
         [HttpGet, Route("get/{id:int}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            try
-            {
-                var request = new TransactionGetIdRequest(id);
-                var response = await _mediator.Send(request);
+            var request = new TransactionGetIdRequest(id);
+            var response = await _mediator.Send(request);
 
-                return _convertersTransaction.ConvertContractToJson(response);
-            }
-            catch (PaymentException ex)
-            {
-                return new ErrorJson(new Error { Message = ex.Message, StatusCode = ex.StatusCodigo, Uri = ex.Uri });
-            }
+            return _convertersTransaction.ConvertContractToJson(response);
         }
     }
 }

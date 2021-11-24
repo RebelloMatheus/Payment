@@ -7,43 +7,43 @@ using System.Threading.Tasks;
 
 namespace Payment.Infra.DataBase.Repository.Base
 {
-    public interface IRepositoryBase<PrimaryKey>
+    public interface IRepositoryBase<TPrimaryKey>
     {
         IQueryable<EntityType> BuildQueryAsync<EntityType>()
-            where EntityType : EntityBase<PrimaryKey>;
+            where EntityType : EntityBase<TPrimaryKey>;
 
         Task<IList<EntityType>> GetAllAsync<EntityType>()
-            where EntityType : EntityBase<PrimaryKey>;
+            where EntityType : EntityBase<TPrimaryKey>;
 
-        Task<EntityType> GetIdAsync<EntityType>(PrimaryKey id)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<EntityType> GetIdAsync<EntityType>(TPrimaryKey id)
+            where EntityType : EntityBase<TPrimaryKey>;
 
-        Task<IEnumerable<EntityType>> GetAllAsync<EntityType>(Expression<Func<EntityType, bool>> condition)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<IEnumerable<TEntityType>> GetAllAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task<IList<EntityType>> GetAllListAsync<EntityType>(Expression<Func<EntityType, bool>> condition)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<IList<TEntityType>> GetAllListAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task<EntityType> FirtOrDefaultAsync<EntityType>(Expression<Func<EntityType, bool>> condition)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<TEntityType> FirtOrDefaultAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task AddAsync<EntityType>(EntityType entity)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task AddAsync<TEntityType>(TEntityType entity)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task UpdateAsync<EntityType>(EntityType entity)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task UpdateAsync<TEntityType>(TEntityType entity)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task RemoveAsync<EntityType>(EntityType entity)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task RemoveAsync<TEntityType>(TEntityType entity)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task RemoveIdAsync<EntityType>(PrimaryKey id)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task RemoveIdAsync<TEntityType>(TPrimaryKey id)
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task<int> CountAllAsync<EntityType>()
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<int> CountAllAsync<TEntityType>()
+            where TEntityType : EntityBase<TPrimaryKey>;
 
-        Task<int> TellWhenAsync<EntityType>(Expression<Func<EntityType, bool>> predicate)
-            where EntityType : EntityBase<PrimaryKey>;
+        Task<int> TellWhenAsync<TEntityType>(Expression<Func<TEntityType, bool>> predicate)
+            where TEntityType : EntityBase<TPrimaryKey>;
     }
 
     public interface IRepositoryBase : IRepositoryBase<int>

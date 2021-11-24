@@ -97,9 +97,8 @@ namespace Payment.Domain.Service.Services
             if (!approvPayment)
             {
                 throw new PaymentException(
-                    message: "Transação recusada, cartão inválido.",
-                    statusCodigo: HttpStatusCode.BadRequest,
-                    uri: "api/v2/transaction/process");
+                    message: SR.TRANSACTION_RECUSED_INVALID_CARD,
+                    statusCodigo: HttpStatusCode.BadRequest);
             }
 
             return _convertersTransaction.ConvertEntityToContract(transaction);

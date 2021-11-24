@@ -1,6 +1,10 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Payment.Domain.Contracts;
+using Payment.Domain.Execption;
 using Payment.Domain.Interfaces.Services;
+using Payment.Domain.Models;
+using Payment.Infra.DataBase.Repository.Base;
 using Payment.Test.Tests.Factories;
 using System;
 using System.Collections.Generic;
@@ -12,39 +16,45 @@ namespace Payment.Test.Tests.Functional.Services
     {
         private IAntecipationService _serviceAntecipation;
         private ITransactionService _serviceTransaction;
+        private IRepositoryBase _repositoryBase;
 
         protected override void SetUpPayment()
         {
             _serviceAntecipation = GetService<IAntecipationService>();
             _serviceTransaction = GetService<ITransactionService>();
+            _repositoryBase = GetService<IRepositoryBase>();
         }
 
         [Test]
         public async Task RequestAntecipationIsValid()
         {
-            for (int i = 0; i < 30; i++)
-            {
-                var cardPayment = GivenAPaymentValid();
-
-                var ret = await _serviceTransaction.ProcessAsync(cardPayment).ConfigureAwait(false);
-            }
+            await GivenAnyPaymentValid(30).ConfigureAwait(false);
             var a = new List<int> { 1, 2, 3, 4 };
-            await _serviceAntecipation.RequestAntecipationAsync(a).ConfigureAwait(false);
+
+            var ret = await _serviceAntecipation.RequestAntecipationAsync(a).ConfigureAwait(false);
+
+            ret.Should().NotBeNull();
         }
 
         [Test]
         public async Task RequestAntecipationNotValid()
         {
-            for (int i = 0; i < 30; i++)
+            await GivenAnyPaymentValid(30).ConfigureAwait(false);
+            var transactionsAntecipation = new List<int> { 1, 2, 3, 4 };
+            await _serviceAntecipation.RequestAntecipationAsync(new List<int> { 1, 2, 3 }).ConfigureAwait(false);
+            Func<Task> ret = async () => await _serviceAntecipation.RequestAntecipationAsync(new List<int> { 3 }).ConfigureAwait(false);
+
+            ret.Should().Throw<PaymentException>().WithMessage(SR.PAYMENT_BLOCKED_APPROVED);
+        }
+
+        private async Task GivenAnyPaymentValid(int repet)
+        {
+            for (int i = 0; i < repet; i++)
             {
                 var cardPayment = GivenAPaymentValid();
 
-                var ret = await _serviceTransaction.ProcessAsync(cardPayment).ConfigureAwait(false);
+                await _serviceTransaction.ProcessAsync(cardPayment).ConfigureAwait(false);
             }
-            var transactionsAntecipation = new List<int> { 1, 2, 3, 4 };
-            await _serviceAntecipation.RequestAntecipationAsync(transactionsAntecipation).ConfigureAwait(false);
-
-            await _serviceAntecipation.RequestAntecipationAsync(new List<int> { 3 }).ConfigureAwait(false);
         }
 
         private CardPaymentContract GivenAPaymentValid()

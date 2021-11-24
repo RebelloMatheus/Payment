@@ -44,10 +44,15 @@ namespace Payment.Domain.Models
             GrantedAmount = grantedAmount;
         }
 
-        public Antecipations(DateTime requestDate, decimal requestedAmount, IEnumerable<Transactions> requestedTransactions)
+        public Antecipations(
+            DateTime requestDate, 
+            decimal requestedAmount, 
+            DateTime? analysisStartDate,
+            IEnumerable<Transactions> requestedTransactions)
         {
             RequestDate = requestDate;
             RequestedAmount = requestedAmount;
+            AnalysisStartDate = analysisStartDate;
             RequestedTransactions = requestedTransactions;
         }
 

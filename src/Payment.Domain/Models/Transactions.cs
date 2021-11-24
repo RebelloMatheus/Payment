@@ -124,5 +124,10 @@ namespace Payment.Domain.Models
         {
             AntecipationStatus = antecipationStatus;
         }
+
+        public void UpdateAntecipationId(int? antecipationId)
+        {
+            AntecipationId = antecipationId;
+        }
     }
 }

@@ -6,7 +6,6 @@ namespace Payment.Domain.Execption
     public class PaymentException : Exception
     {
         public HttpStatusCode StatusCodigo { get; set; }
-        public string Uri { get; set; }
 
         public PaymentException()
         {
@@ -17,11 +16,10 @@ namespace Payment.Domain.Execption
         {
         }
 
-        public PaymentException(string message, HttpStatusCode statusCodigo, string uri)
+        public PaymentException(string message, HttpStatusCode statusCodigo)
            : base(message)
         {
             StatusCodigo = statusCodigo;
-            Uri = uri;
         }
 
         public PaymentException(string message, Exception innerException)

@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Payment.Application.WebApi.Converters.Interfaces;
+using Payment.Application.WebApi.Models;
+using Payment.Application.WebApi.Models.ResultModel;
 using Payment.Application.WebApi.Models.ViewModel;
+using Payment.Domain.Execption;
 using Payment.Domain.Mediator.Mediators.Requests;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,11 +66,24 @@ namespace Payment.Application.WebApi.Controllers
         [HttpPost, Route("start-analyzis")]
         public async Task<IActionResult> StartAnalyzis([FromBody] StartAnalyzis startAnalyzis)
         {
-            var request = new AntecipationProcessingStartAnalyzisRequest(startAnalyzis.AntecipationId);
+            try
+            {
+                var request = new AntecipationProcessingStartAnalyzisRequest(startAnalyzis.AntecipationId);
 
-            var response = await _mediator.Send(request);
+                var response = await _mediator.Send(request);
 
-            return _convertersAntexipation.ConvertContractToJson(response);
+                return _convertersAntexipation.ConvertContractToJson(response);
+            }
+            catch (PaymentException ex)
+            {
+                return new ErrorJson(
+                    new Error
+                    {
+                        Message = ex.Message,
+                        StatusCode = ex.StatusCodigo,
+                        Uri = "api/v2/antecipation/StartAnalyzis"
+                    });
+            };
         }
 
         /// <summary>
@@ -85,7 +101,7 @@ namespace Payment.Application.WebApi.Controllers
         }
 
         /// <summary>
-        /// Consult prepayment history with filter by status (pending, under analysis, completed)
+        /// Consult prepayment history with filter by status (pending, analysis, finished)
         /// </summary>
         [HttpGet, Route("list-history/{status=string}")]
         public async Task<IActionResult> ListHistory([FromRoute] string status)

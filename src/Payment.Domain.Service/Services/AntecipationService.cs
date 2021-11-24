@@ -1,5 +1,6 @@
 ﻿using Payment.Domain.Contracts;
 using Payment.Domain.Enumerators;
+using Payment.Domain.Execption;
 using Payment.Domain.Interfaces.Converters;
 using Payment.Domain.Interfaces.Services;
 using Payment.Domain.Models;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,15 +37,15 @@ namespace Payment.Domain.Service.Services
             Expression<Func<Antecipations, bool>> filtro = x => false;
             switch (status)
             {
-                case "pendente":
+                case "pending":
                     filtro = antecipation => !antecipation.AnalysisStartDate.HasValue;
                     break;
 
-                case "analise":
+                case "analysis":
                     filtro = antecipation => antecipation.AnalysisStartDate.HasValue && !antecipation.AnalysisEndDate.HasValue;
                     break;
 
-                case "finalizada":
+                case "finished":
                     filtro = antecipation => antecipation.AnalysisResult.HasValue;
                     break;
 
@@ -79,7 +81,9 @@ namespace Payment.Domain.Service.Services
 
             if (antecipation == null || antecipation.AnalysisStartDate.HasValue)
             {
-                return null;
+                throw new PaymentException(
+                    message: SR.PAYMENT_BLOCKED_APPROVED,
+                    statusCodigo: HttpStatusCode.BadRequest);
             }
 
             antecipation.UpdateAnalysisStartDate(DateTime.Now);
@@ -100,17 +104,25 @@ namespace Payment.Domain.Service.Services
 
             if (!transactions.Any())
             {
-                return null;
+                throw new PaymentException(
+                    message: SR.PAYMENT_BLOCKED_APPROVED,
+                    statusCodigo: HttpStatusCode.BadRequest);
             }
 
             Antecipations antecipations = new Antecipations(
                 requestDate: DateTime.Now,
                 requestedAmount: transactions.Sum(p => p.NetAmount),
+                analysisStartDate: null,
                 requestedTransactions: transactions);
 
             await _repositoryBase.AddAsync(antecipations);
-
-            return (IEnumerable<AntecipationsContract>)_convertersAntecipation.ConvertEntityToContract(antecipations);
+            foreach (var transaction in transactions)
+            {
+                transaction.UpdateAntecipationId(antecipations.Id);
+                await _repositoryBase.UpdateAsync(transaction);
+            }
+            var antecipationContract = _convertersAntecipation.ConvertEntityToContract(antecipations);
+            return new List<AntecipationsContract> { antecipationContract };
         }
 
         private async Task<IEnumerable<AntecipationsContract>> ModifyStatusProcessingAsync(IList<Antecipations> entitys, ModifyStatusAntecipationContract contract)

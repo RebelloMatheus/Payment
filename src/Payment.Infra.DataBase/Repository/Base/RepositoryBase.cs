@@ -9,66 +9,66 @@ using System.Threading.Tasks;
 
 namespace Payment.Infra.DataBase.Repository.Base
 {
-    public class RepositoryBase<ContextType, PrimaryKey> : IRepositoryBase<PrimaryKey>, IDisposable
-        where ContextType : ContextBase
+    public class RepositoryBase<TContextType, TPrimaryKey> : IRepositoryBase<TPrimaryKey>, IDisposable
+        where TContextType : ContextBase
     {
-        protected readonly ContextType _context;
+        protected readonly TContextType _context;
 
-        public RepositoryBase(ContextType context)
+        public RepositoryBase(TContextType context)
         {
             _context = context;
         }
 
-        public async Task AddAsync<EntityType>(EntityType entity) where EntityType : EntityBase<PrimaryKey>
+        public async Task AddAsync<TEntityType>(TEntityType entity) where TEntityType : EntityBase<TPrimaryKey>
         {
-            await _context.Set<EntityType>().AddAsync(entity);
+            await _context.Set<TEntityType>().AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<EntityType> BuildQueryAsync<EntityType>() where EntityType : EntityBase<PrimaryKey>
-            => _context.Set<EntityType>();
+        public IQueryable<TEntityType> BuildQueryAsync<TEntityType>() where TEntityType : EntityBase<TPrimaryKey>
+            => _context.Set<TEntityType>();
 
-        public async Task<int> CountAllAsync<EntityType>() where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().CountAsync();
+        public async Task<int> CountAllAsync<TEntityType>() where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().CountAsync();
 
-        public async Task<EntityType> FirtOrDefaultAsync<EntityType>(Expression<Func<EntityType, bool>> condition) where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().FirstOrDefaultAsync(condition);
+        public async Task<TEntityType> FirtOrDefaultAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition) where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().FirstOrDefaultAsync(condition);
 
-        public async Task<IList<EntityType>> GetAllAsync<EntityType>() where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().ToListAsync();
+        public async Task<IList<TEntityType>> GetAllAsync<TEntityType>() where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().ToListAsync();
 
-        public async Task<IEnumerable<EntityType>> GetAllAsync<EntityType>(Expression<Func<EntityType, bool>> condition) where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().Where(condition).ToListAsync();
+        public async Task<IEnumerable<TEntityType>> GetAllAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition) where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().Where(condition).ToListAsync();
 
-        public async Task<IList<EntityType>> GetAllListAsync<EntityType>(Expression<Func<EntityType, bool>> condition) where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().Where(condition).ToListAsync();
+        public async Task<IList<TEntityType>> GetAllListAsync<TEntityType>(Expression<Func<TEntityType, bool>> condition) where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().Where(condition).ToListAsync();
 
-        public async Task<EntityType> GetIdAsync<EntityType>(PrimaryKey id)
-            where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().FindAsync(id);
+        public async Task<TEntityType> GetIdAsync<TEntityType>(TPrimaryKey id)
+            where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().FindAsync(id);
 
-        public async Task RemoveAsync<EntityType>(EntityType entity) where EntityType : EntityBase<PrimaryKey>
+        public async Task RemoveAsync<TEntityType>(TEntityType entity) where TEntityType : EntityBase<TPrimaryKey>
         {
-            _context.Set<EntityType>().Remove(entity);
+            _context.Set<TEntityType>().Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveIdAsync<EntityType>(PrimaryKey id) where EntityType : EntityBase<PrimaryKey>
+        public async Task RemoveIdAsync<TEntityType>(TPrimaryKey id) where TEntityType : EntityBase<TPrimaryKey>
         {
-            var entity = await GetIdAsync<EntityType>(id).ConfigureAwait(false);
+            var entity = await GetIdAsync<TEntityType>(id).ConfigureAwait(false);
             if (entity != null)
             {
-                _context.Set<EntityType>().Remove(entity);
+                _context.Set<TEntityType>().Remove(entity);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<int> TellWhenAsync<EntityType>(Expression<Func<EntityType, bool>> predicate) where EntityType : EntityBase<PrimaryKey>
-            => await _context.Set<EntityType>().CountAsync(predicate);
+        public async Task<int> TellWhenAsync<TEntityType>(Expression<Func<TEntityType, bool>> predicate) where TEntityType : EntityBase<TPrimaryKey>
+            => await _context.Set<TEntityType>().CountAsync(predicate);
 
-        public async Task UpdateAsync<EntityType>(EntityType entity) where EntityType : EntityBase<PrimaryKey>
+        public async Task UpdateAsync<TEntityType>(TEntityType entity) where TEntityType : EntityBase<TPrimaryKey>
         {
-            _context.Set<EntityType>().Update(entity);
+            _context.Set<TEntityType>().Update(entity);
             await _context.SaveChangesAsync();
         }
 
