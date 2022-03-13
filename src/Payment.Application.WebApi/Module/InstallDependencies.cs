@@ -9,11 +9,11 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddServicesApi(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AdicionarRequisicoes(configuration);
-            services.AdicionarConvertersViewModel();
+            services.AddRequisitions(configuration);
+            services.AddConvertersViewModel();
         }
 
-        public static void AdicionarConvertersViewModel(this IServiceCollection services)
+        public static void AddConvertersViewModel(this IServiceCollection services)
         {
             services.TryAddScoped<ICardPaymentConverter, CardPaymentConverter>();
             services.TryAddScoped<IConvertersAntecipation, ConvertersAntecipation>();
